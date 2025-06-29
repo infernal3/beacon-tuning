@@ -1,0 +1,23 @@
+<!doctypehtml>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <button id="A">Click to do something</button>
+    <script>
+      const el=e=>document.getElementById(e);
+      const audioctx=new AudioContext();
+      function playAudio(ctx,freq){
+        var audio=ctx.createOscillator();
+        audio.exponentialRampToValueAtTime(freq, ctx.currentTime+0.05);
+        var gain = ctx.createGain();
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime+0.3);
+        audio.connect(gain).connect(ctx.destination);
+        audio.start();
+        audio.stop(ctx.currentTime + 0.3);
+      }
+      el("A").addEventListener("click",function() { playAudio(audioctx, 300); });
+    </script>
+  </body>
+</html>
