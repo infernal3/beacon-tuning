@@ -7,6 +7,7 @@
     <button id="A">Click to do something</button>
     <script>
       const el=e=>document.getElementById(e);
+      var i=300;
       const audioctx=new AudioContext();
       function playAudio(ctx,freq){
         var audio=ctx.createOscillator();
@@ -17,7 +18,7 @@
         audio.start();
         audio.stop(ctx.currentTime + 0.3);
       }
-      el("A").addEventListener("click",function() { playAudio(audioctx, 300); });
+      el("A").addEventListener("click",function() { playAudio(audioctx, i); });
     </script>
   </body>
 </html>
