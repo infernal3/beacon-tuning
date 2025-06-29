@@ -14,10 +14,10 @@
         audio.frequency=""+freq;
         audio.frequency.exponentialRampToValueAtTime(freq*1.05, ctx.currentTime+0.05);
         var gain = ctx.createGain();
-        gain.gain.exponentialRampToValueAtTime(freq*0.95, ctx.currentTime+0.3);
+        gain.gain.exponentialRampToValueAtTime(freq*0.95, ctx.currentTime+0.1);
         audio.connect(gain).connect(ctx.destination);
         audio.start();
-        audio.stop(ctx.currentTime + 0.3);
+        audio.stop(ctx.currentTime + 0.1);
       }
       el("A").addEventListener("click",function() { playAudio(audioctx, i); });
     </script>
