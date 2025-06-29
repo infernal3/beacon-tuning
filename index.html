@@ -11,6 +11,7 @@
       const audioctx=new AudioContext();
       function playAudio(ctx,freq){
         var audio=ctx.createOscillator();
+        audio.frequency=""+i;
         audio.frequency.exponentialRampToValueAtTime(freq, ctx.currentTime+0.05);
         var gain = ctx.createGain();
         gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime+0.3);
