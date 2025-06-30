@@ -20,10 +20,12 @@ const el=e=>document.getElementById(e);
       el("A2").addEventListener("click",e=>{userFreq=userFreq<=200?200:userFreq-20;});
       el("B").addEventListener("click",e=>{userSpeed=userSpeed>=5?1:userSpeed+1;});
       const recursiveBeacon=function recursiveBeacon(){
+        console.log("beacon 1: T+"+audioctx.currentTime);
         playAudio(audioctx, beaconFreq);
         window.setTimeout(()=>{recursiveBeacon();},1500.0/beaconSpeed);
       }
       const recursiveUser=function recursiveUser(){
+        console.log("beacon 2: T+"+audioctx.currentTime);
         playAudio(audioctx, userFreq);
         window.setTimeout(()=>{recursiveUser();},1500.0/userSpeed);
       }
