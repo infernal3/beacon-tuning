@@ -7,6 +7,7 @@ var beaconSpeed, beaconFreq, userSpeed, userFreq,completions=-1,flux=0,u1=0,u2=f
             beaconFreq=200+(20*parseInt(Math.random()*20));
             userSpeed=3;
             userFreq=440;
+            if(u2)u2e=10;
             el("F").style="display:none";
             completions+=u1+1;
             el("T").textContent=completions;
