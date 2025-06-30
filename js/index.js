@@ -43,6 +43,7 @@ el("U1").addEventListener("click",e=>{
     if(flux>=100*Math.pow(3,u1)){
         flux-=100*Math.pow(3,u1)
         u1++
+        el("U1").textContent=`Cost: ${100*Math.pow(3,u1)} Beacon Flux`;
     }
 });
 const recursiveBeacon=function recursiveBeacon(){
