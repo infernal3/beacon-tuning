@@ -1,9 +1,10 @@
 const el=e=>document.getElementById(e);
 const previousTickArray = [0,0];
+var beaconSpeed, beaconFreq, userSpeed, userFreq;
       function randomize(){
-            var beaconSpeed=1+parseInt(Math.random()*5),
-            beaconFreq=200+(20*parseInt(Math.random()*20)),
-            userSpeed=3,
+            beaconSpeed=1+parseInt(Math.random()*5);
+            beaconFreq=200+(20*parseInt(Math.random()*20));
+            userSpeed=3;
             userFreq=440;
             el("F").style="display:none";
       }
@@ -30,6 +31,7 @@ const previousTickArray = [0,0];
       el("A1").addEventListener("click",e=>{userFreq=userFreq>=600?600:userFreq+20;});
       el("A2").addEventListener("click",e=>{userFreq=userFreq<=200?200:userFreq-20;});
       el("B").addEventListener("click",e=>{userSpeed=userSpeed>=5?1:userSpeed+1;});
+      el("G").addEventListener("click",e=>{randomize();});
       const recursiveBeacon=function recursiveBeacon(){
         previousTickArray[0]=audioctx.currentTime;
         playAudio(audioctx, beaconFreq);
