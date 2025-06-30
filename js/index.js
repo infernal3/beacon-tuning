@@ -16,7 +16,7 @@ const previousTickArray = [0,0];
       window.setInterval(()=>{
         el("C").textContent=userFreq;
         el("D").textContent=`${userSpeed} (${(1.5/userSpeed).toFixed(3)}s intervals)`;
-        el("E").textContent=Math.min(Math.abs(previousTickArray[1]-previousTickArray[0]),Math.abs(previousTickArray[0]-previousTickArray[1]));
+        el("E").textContent=parseInt(1000*Math.min(Math.abs(previousTickArray[1]-previousTickArray[0]),Math.abs(previousTickArray[0]-previousTickArray[1])));
       },50);
       el("A1").addEventListener("click",e=>{userFreq=userFreq>=600?600:userFreq+20;});
       el("A2").addEventListener("click",e=>{userFreq=userFreq<=200?200:userFreq-20;});
