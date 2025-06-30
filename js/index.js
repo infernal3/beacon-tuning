@@ -16,7 +16,7 @@ const previousTickArray = [0,0];
       window.setInterval(()=>{
         el("C").textContent=userFreq;
         el("D").textContent=`${userSpeed} (${(1.5/userSpeed).toFixed(3)}s intervals)`;
-        let vi=parseInt(1000*Math.min(Math.abs(previousTickArray[1]-previousTickArray[0]),Math.abs((1500.0/beaconSpeed)-(previousTickArray[1]-previousTickArray[0]))));
+        let xw=previousTickArray[1]-previousTickArray[0],vi=parseInt(1000*Math.min(Math.abs(xw),Math.abs((1500.0/beaconSpeed)-xw)));
         el("E").textContent=vi;
         el("F").textContent=vi < 75 && userFreq==beaconFreq && userSpeed==beaconSpeed ? "The beacon is correctly tuned!":"";
       },50);
