@@ -18,7 +18,7 @@ const previousTickArray = [0,0];
         el("D").textContent=`${userSpeed} (${(1.5/userSpeed).toFixed(3)}s intervals)`;
         let vi=parseInt(1000*Math.min(Math.abs(previousTickArray[1]-previousTickArray[0]),Math.abs((1500.0/beaconSpeed)-(previousTickArray[1]-previousTickArray[0]))));
         el("E").textContent=vi;
-        el("F").textContent=vi < 75 && userFreq==beaconFreq && userSpeed==beaconSpeed ? "The beacon is correctly tuned!"
+        el("F").textContent=vi < 75 && userFreq==beaconFreq && userSpeed==beaconSpeed ? "The beacon is correctly tuned!":"";
       },50);
       el("A1").addEventListener("click",e=>{userFreq=userFreq>=600?600:userFreq+20;});
       el("A2").addEventListener("click",e=>{userFreq=userFreq<=200?200:userFreq-20;});
