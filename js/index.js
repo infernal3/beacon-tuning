@@ -1,6 +1,13 @@
 const el=e=>document.getElementById(e);
 const previousTickArray = [0,0];
-      var beaconSpeed=1+parseInt(Math.random()*5),beaconFreq=200+(20*parseInt(Math.random()*20)),userSpeed=3,userFreq=440;
+      function randomize(){
+            var beaconSpeed=1+parseInt(Math.random()*5),
+            beaconFreq=200+(20*parseInt(Math.random()*20)),
+            userSpeed=3,
+            userFreq=440;
+            el("F").style="display:none";
+      }
+      randomize();
       const audioctx=new AudioContext();
       function playAudio(ctx,freq){
         var audio=ctx.createOscillator();
@@ -18,7 +25,7 @@ const previousTickArray = [0,0];
         el("D").textContent=`${userSpeed} (${(1.5/userSpeed).toFixed(3)}s intervals)`;
         let xw=previousTickArray[1]-previousTickArray[0],vi=parseInt(1000*Math.min(Math.abs(xw),Math.abs((1500.0/beaconSpeed)-xw)));
         el("E").textContent=vi;
-        el("F").textContent=vi < 75 && userFreq==beaconFreq && userSpeed==beaconSpeed ? "The beacon is correctly tuned!":"";
+        if(vi < 75 && userFreq==beaconFreq && userSpeed==beaconSpeed)el("F").style="";
       },50);
       el("A1").addEventListener("click",e=>{userFreq=userFreq>=600?600:userFreq+20;});
       el("A2").addEventListener("click",e=>{userFreq=userFreq<=200?200:userFreq-20;});
