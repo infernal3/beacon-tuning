@@ -1,7 +1,7 @@
 const el=e=>document.getElementById(e);
 const previousTickArray = [0,0];
 
-var beaconSpeed, beaconFreq, userSpeed, userFreq,completions=-1,flux=0,u1=0;
+var beaconSpeed, beaconFreq, userSpeed, userFreq,completions=-1,flux=0,u1=0,u2=false,u2e=0;
       function randomize(){
             beaconSpeed=1+parseInt(Math.random()*5);
             beaconFreq=200+(20*parseInt(Math.random()*20));
@@ -25,7 +25,8 @@ var beaconSpeed, beaconFreq, userSpeed, userFreq,completions=-1,flux=0,u1=0;
       }
       
       window.setInterval(()=>{
-        flux+=completions*0.05;
+        flux+=completions*(u2e > 0 ? 0.15 : 0.05);
+        u2e = u2e <= 0 ? 0 : u2e - 0.05;
         el("beacon-flux").textContent=Math.floor(flux);
         el("C").textContent=userFreq;
         el("D").textContent=`${userSpeed} (${(1.5/userSpeed).toFixed(3)}s intervals)`;
@@ -43,7 +44,14 @@ el("U1").addEventListener("click",e=>{
     if(flux>=100*Math.pow(3,u1)){
         flux-=100*Math.pow(3,u1)
         u1++
-        el("U1").textContent=`Cost: ${100*Math.pow(3,u1)} Beacon Flux`;
+        el("U1").textContent=`Cost: ${100*Math.pow(3,u1)} Beacon Flux (+${u1} extra shards upon tuning)`;
+    }
+});
+el("U2").addEventListener("click",e=>{
+    if(flux>=1000){
+        flux-=1000
+        u2=true
+        el("U2").textContent="Purchased"
     }
 });
 const recursiveBeacon=function recursiveBeacon(){
