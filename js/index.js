@@ -15,6 +15,8 @@ const load=function load(){
         u2 = decoded.u2;
         u2e = decoded.u2e;
     }
+    el("T").textContent=completions;
+    el("F").style="display:none";
 }
 const getSave=function getSave(){
     var XR={
