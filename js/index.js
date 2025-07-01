@@ -1,19 +1,54 @@
 const el=e=>document.getElementById(e);
 const previousTickArray = [0,0];
+const load=function load(){
+    if(localStorage.getItem("beaconTuningSave")==null){
+        completions=0;
+        flux=0;
+        u1=0;
+        u2=false;
+        u2e=0;
+    } else {
+        var saves = localStorage.getItem("beaconTuningSave"),decoded = JSON.parse(atob(saves));
+        completions = decoded.completions;
+        flux = decoded.flux;
+        u1 = decoded.u1;
+        u2 = decoded.u2;
+        u2e = decoded.u2e;
+    }
+}
+const getSave=function getSave(){
+    var XR={
+        flux:flux,
+        completions:completions,
+        u1:u1,
+        u2:u2,
+        u2e:u2e
+    },XT=btoa(JSON.stringify(XR));
+    return XT;
+}
+const save=function save(){
+    localStorage.setItem("beaconTuningSave",getSave());
+}
 
-var beaconSpeed, beaconFreq, userSpeed, userFreq,completions=-1,flux=0,u1=0,u2=false,u2e=0;
-      function randomize(){
-            beaconSpeed=1+parseInt(Math.random()*5);
-            beaconFreq=200+(20*parseInt(Math.random()*20));
-            userSpeed=3;
-            userFreq=440;
-            if(u2)u2e=10;
-            el("F").style="display:none";
-            completions+=u1+1;
-            el("T").textContent=completions;
-      }
-      randomize();
-      const audioctx=new AudioContext();
+var beaconSpeed, beaconFreq, userSpeed, userFreq,completions,flux,u1,u2,u2e;
+function randomize0(){
+    beaconSpeed=1+parseInt(Math.random()*5);
+    beaconFreq=200+(20*parseInt(Math.random()*20));
+    userSpeed=3;
+    userFreq=440;
+}
+function randomize(){
+    randomize0();
+    if(u2)u2e=10;
+    el("F").style="display:none";
+    completions+=u1+1;
+    el("T").textContent=completions;
+}
+randomize0();
+const audioctx=new AudioContext();
+// SAVE LOADING PROCEDURE
+load();
+//
       function playAudio(ctx,freq){
         var audio=ctx.createOscillator();
         audio.frequency=""+freq;
@@ -24,7 +59,7 @@ var beaconSpeed, beaconFreq, userSpeed, userFreq,completions=-1,flux=0,u1=0,u2=f
         audio.start();
         audio.stop(ctx.currentTime + 0.1);
       }
-      
+// main game loop
       window.setInterval(()=>{
         flux+=completions*(u2e > 0 ? 0.15 : 0.05);
         u2e = u2e <= 0 ? 0 : u2e - 0.05;
@@ -37,6 +72,7 @@ var beaconSpeed, beaconFreq, userSpeed, userFreq,completions=-1,flux=0,u1=0,u2=f
             el("F").style="";
         }
       },50);
+// instantize event listeners
 el("A1").addEventListener("click",e=>{userFreq=userFreq>=600?600:userFreq+20;});
 el("A2").addEventListener("click",e=>{userFreq=userFreq<=200?200:userFreq-20;});
 el("B").addEventListener("click",e=>{userSpeed=userSpeed>=5?1:userSpeed+1;});
@@ -55,6 +91,15 @@ el("U2").addEventListener("click",e=>{
         el("U2").textContent="Purchased"
     }
 });
+el("save").addEventListener("click",e=>{
+    save();
+});
+el("wipe").addEventListener("click",e=>{
+    localStorage.removeItem("beaconTuningSave");
+    window.setTimeout(()=>{location.reload()},250);
+})
+
+// set up beacon timings
 const recursiveBeacon=function recursiveBeacon(){
   previousTickArray[0]=audioctx.currentTime;
   playAudio(audioctx, beaconFreq);
@@ -67,3 +112,4 @@ const recursiveUser=function recursiveUser(){
 }
 recursiveUser();
 window.setTimeout(()=>{recursiveBeacon();},50*parseInt(Math.random()*55));
+
