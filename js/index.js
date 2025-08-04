@@ -17,6 +17,7 @@ const load=function load(){
     }
     el("T").textContent=completions;
     el("F").style="display:none";
+    if(completions > 0) el("extrabox").style="";
 }
 const getSave=function getSave(){
     var XR={
@@ -42,6 +43,7 @@ function randomize0(){
 function randomize(){
     randomize0();
     if(u2)u2e=10;
+    el("extrabox").style="";
     el("F").style="display:none";
     completions+=u1+1;
     el("T").textContent=completions;
